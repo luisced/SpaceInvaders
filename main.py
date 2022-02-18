@@ -1,7 +1,9 @@
-
-from black import main
+from movement import Movement
+from ship import *
+from player import Player
+import images
+import movement
 import pygame as pg
-import os
 import time
 import random
 
@@ -11,35 +13,8 @@ pg.init()
 This is the main file for the Space Invaders game.
 """
 
-
-# (Player): SpaceInvaders\images\spacehip.png
-space_ship = pg.image.load(os.path.join("images", "space-invaders.png"))
-
-# (Enemy 1): SpaceInvaders\images\space_invaders_red.png
-space_ship_red = pg.image.load(
-    os.path.join("images", "space_invaders_red.png"))
-
-# (Enemy 2): SpaceInvaders\images\space_invaders_blue.png
-space_ship_glue = pg.image.load(
-    os.path.join("images", "space_invaders_blue.png"))
-
-# (Enemy 3): SpaceInvaders\images\space_invaders_green.png
-space_ship_green = pg.image.load(
-    os.path.join("images", "space_invaders_green.png"))
-
-# (Red laser): SpaceInvaders\images\SpaceInvadersLaserDepiction.png
-red_laser = pg.image.load(os.path.join("images", "laser.png"))
-
-# (Lightning): SpaceInvaders\images\SpaceInvadersLaserDepiction.png
-lightning = pg.image.load(os.path.join("images", "Lighning.png"))
-
-# background: SpaceInvaders\images\SpaceInvadersBackground.png
-
-background = pg.image.load(os.path.join(
-    "images", "SpaceInvadersBackground.jpg"))
-
-
-Win = pg.display.set_mode((800, 600))
+width, height = 800, 600
+Win = pg.display.set_mode((width, height))
 
 
 def game():
@@ -56,8 +31,11 @@ def game():
     lives = 5  # lives is the number of lives the player has.
     score = 0  # score is the player's score.
     enemies = []  # enemies is a list of enemies.
+    velocity = 5  # velocity is the speed of the enemies.
     # main_font is the font used for the score and level.
     main_font = pg.font.SysFont("comicsans", 50)
+    player = Player(300, 400)  # player is the player's player.
+    movement = Movement(300, 650)  # movement is the player's movement.
 
     # Main loop
 
@@ -66,6 +44,7 @@ def game():
         This function will redraw the window.
         """
 
+        # Lives, score, level and enemies are drawn on the window.
         lives_banner = main_font.render(
             f"Lives: {lives}", True, (255, 255, 255))
         level_banner = main_font.render(
@@ -75,20 +54,39 @@ def game():
         enemies_banner = main_font.render(
             f"Enemies Left: {len(enemies)}", True, (255, 255, 255))
 
-        Win.blit(background, (0, 0))
+        # This draws the lives, level, score and enemies on the window.
+        Win.blit(images.background, (0, 0))
         Win.blit(lives_banner, (10, 10))
-        Win.blit(level_banner, (10, 60))
-        Win.blit(score_banner, (10, 110))
-        Win.blit(enemies_banner, (10, 160))
+        Win.blit(level_banner, (655, 10))
+        Win.blit(score_banner, (10, 60))
+        Win.blit(enemies_banner, (10, 110))
+
+        # This draws the player on the window.
+        player.draw(Win)
+
+        # This updates the display.
         pg.display.update()
 
     while run:
         clock.tick(fps)
         redraw_window()
 
+        # If the user quits the game, the game loop will stop.
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
+
+        # Key presses are checked.
+
+        keys = pg.key.get_pressed()
+        if keys[pg.K_LEFT] and player.x - velocity > 0:  # Move Left
+            player.x -= velocity
+        if keys[pg.K_RIGHT] and player.x + velocity < width:  # Move Right
+            player.x += velocity
+        if keys[pg.K_UP] and player.y - velocity > 0:  # Move Up
+            player.y -= velocity  # Move Up
+        if keys[pg.K_DOWN] and player.y + velocity < height:
+            player.y += velocity  # Move Down
 
 
 game()
