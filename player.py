@@ -1,7 +1,6 @@
 from ship import Ship
 import images
 import pygame as pg
-import os
 
 
 class Player(Ship):
@@ -11,7 +10,10 @@ class Player(Ship):
 
     def __init__(self, x, y, health=100):
         super().__init__(x, y, health)
-        self.ship_img = images.space_ship
+        self.ship_img = images.img
         self.laser_img = images.red_laser
-        self.maks = pg.mask.from_surface(self.ship_img)
+        self.mask = pg.mask.from_surface(self.ship_img)
         self.max_health = health
+
+
+player = Player(300, 400)

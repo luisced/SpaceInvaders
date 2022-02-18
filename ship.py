@@ -18,7 +18,6 @@ class Ship:
         self.x = x
         self.y = y
         self.health = health
-        self.score = 0
         self.ship_img = None
         self.laser_img = None
         self.lasers = []
@@ -28,7 +27,4 @@ class Ship:
         """
         This is the draw method for the class Ship.
         """
-        pg.draw.rect(window, (255, 0, 0), (self.x, self.y, 50, 50))
-
-
-ship = Ship(300, 300, (255, 0, 0))
+        window.blit(self.ship_img, (self.x, self.y))

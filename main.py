@@ -1,8 +1,6 @@
-from movement import Movement
 from ship import *
 from player import Player
 import images
-import movement
 import pygame as pg
 import time
 import random
@@ -34,8 +32,7 @@ def game():
     velocity = 5  # velocity is the speed of the enemies.
     # main_font is the font used for the score and level.
     main_font = pg.font.SysFont("comicsans", 50)
-    player = Player(300, 400)  # player is the player's player.
-    movement = Movement(300, 650)  # movement is the player's movement.
+    player = Player(300, 400, health=100)  # player is the player's player.
 
     # Main loop
 
@@ -57,7 +54,7 @@ def game():
         # This draws the lives, level, score and enemies on the window.
         Win.blit(images.background, (0, 0))
         Win.blit(lives_banner, (10, 10))
-        Win.blit(level_banner, (655, 10))
+        Win.blit(level_banner, (width - level_banner.get_width() - 10, 10))
         Win.blit(score_banner, (10, 60))
         Win.blit(enemies_banner, (10, 110))
 
