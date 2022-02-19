@@ -24,11 +24,11 @@ space_ship_green = pg.transform.scale(space_ship_green_png, (50, 50))
 
 # (Red laser): SpaceInvaders\images\SpaceInvadersLaserDepiction.png
 red_laser_png = pg.image.load(os.path.join("images", "laser.png"))
-red_laser = pg.transform.scale(red_laser_png, (10, 50))
+red_laser = pg.transform.smoothscale(red_laser_png, (2, 2))
 
 # (Lightning): SpaceInvaders\images\SpaceInvadersLaserDepiction.png
 lightning_png = pg.image.load(os.path.join("images", "Lighning.png"))
-lightning = pg.transform.scale(lightning_png, (50, 50))
+lightning = pg.transform.smoothscale(lightning_png, (50, 50))
 
 # background: SpaceInvaders\images\SpaceInvadersBackground.png
 
